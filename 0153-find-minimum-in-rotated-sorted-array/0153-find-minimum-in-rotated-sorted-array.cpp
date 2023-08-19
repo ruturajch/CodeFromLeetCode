@@ -1,10 +1,20 @@
 class Solution {
 public:
     int findMin(vector<int>& nums) {
-        int minele = nums[0];
-        for(int i = 0;i < nums.size(); i++){
-            minele = min(minele, nums[i]);
-        }    
-        return minele;
+        return binary(nums, 0, nums.size() - 1);
     }
+
+    int binary(vector<int>& nums, int i, int j) {
+        if (i < j) {
+            int m = i + (j - i) / 2; // This avoids integer overflow
+
+            if (nums[m] > nums[j])
+                return binary(nums, m + 1, j);
+            else
+                return binary(nums, i, m);
+        } else {
+            return nums[i];
+        }
+    }
+
 };
