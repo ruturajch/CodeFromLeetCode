@@ -1,56 +1,44 @@
 class Solution {
 public:
-    void dfs(vector<int> adjList[], vector<int>& mem, int k){
-        for(int i = 0; i < adjList[k].size(); i++){
-            if(mem[adjList[k][i]] == 0){
-                mem[adjList[k][i]] = 1;
-                dfs(adjList, mem, adjList[k][i]);
-            }
-        }
-        return;
-    }
     int numIslands(vector<vector<char>>& grid) {
         int n = grid.size();
         int m = grid[0].size();
 
+        int ans = 0;
+        
+        vector<vector<bool>> vis(n, vector<bool> (m,false));
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(grid[i][j]=='1' && !vis[i][j]){
+                    ans++;
+                    queue<pair<int,int>> q;
+                    q.push({i,j});
+                    vis[i][j] = true;
+                    while(!q.empty()){
+                        int row = q.front().first;
+                        int col = q.front().second;
+                        q.pop();
 
-        // adjList 
-        vector<int> adjList[m*n];
-        int dim[4][2] = {{1,0},{-1,0},{0,-1},{0,1}};
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < m; j++){
-                if(grid[i][j] == '1'){
-                    cout<< "r" << endl;
-                    for(int k = 0; k<4; k++){
-                        int nrow = i + dim[k][0];
-                        int ncol = j + dim[k][1];
-                        if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < m){
-                            if(grid[nrow][ncol] == '1'){
-                                adjList[i * m + j].push_back(nrow * m + ncol);
-                            }
+                        if( row!=0 && grid[row-1][col] == '1' && !vis[row-1][col]){
+                            q.push({row-1,col});
+                            vis[row-1][col] = true;
+                        }
+                        if( col!=0 && grid[row][col-1] == '1' && !vis[row][col-1]){
+                            q.push({row,col-1});
+                            vis[row][col-1] = true;
+                        }
+                        if( row!=n-1 && grid[row+1][col] == '1' && !vis[row+1][col]){
+                            q.push({row+1,col});
+                            vis[row+1][col] = true;
+                        }
+                        if( col!=m-1 && grid[row][col+1] == '1' && !vis[row][col+1]){
+                            q.push({row,col+1});
+                            vis[row][col+1] = true;
                         }
                     }
                 }
             }
         }
-        // memory vector
-        vector<int> mem(m * n, 0);
-        //
-        int ans = 0;
-        for(int i = 0; i < m*n; i++){
-            for(auto it : adjList[i])
-                cout << it << " ";
-            cout << endl;
-        }
-
-        for(int i = 0; i < m*n; i++){
-            if(mem[i] == 0 && grid[i/m][i%m] == '1'){
-                ans++;
-                mem[i] = 1;
-                dfs(adjList, mem, i);
-            }
-        }
         return ans;
     }
-
 };
