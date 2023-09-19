@@ -13,9 +13,10 @@ class Solution {
 public:
     void invert(TreeNode* root, TreeNode*& ansNode) {
     if (root == NULL) {
-        ansNode = NULL; // Set the ansNode to NULL for leaf nodes.
+        ansNode = NULL;
         return;
     }
+        
     
     ansNode = new TreeNode(root->val);
     invert(root->right, ansNode->left);
@@ -23,7 +24,7 @@ public:
 }
 
 TreeNode* invertTree(TreeNode* root) {
-    TreeNode* ansNode = nullptr; // Initialize ansNode to nullptr
+    TreeNode* ansNode; // Initialize ansNode to nullptr
     invert(root, ansNode);
     return ansNode;
 }
