@@ -15,10 +15,10 @@ public:
         {
             int nrow = l + dim[i][0];
             int ncol = r + dim[i][1];
-            cout << 1 << endl;
+            //cout << 1 << endl;
             if (nrow >= 0 && ncol >= 0 && nrow < matrix.size() && ncol < matrix[0].size() && matrix[l][r] < matrix[nrow][ncol])
             {
-                cout << 2 << endl;
+                //cout << 2 << endl;
                 ans = max(ans, 1 + dfs(nrow, ncol, matrix, dp));
             }
         }
