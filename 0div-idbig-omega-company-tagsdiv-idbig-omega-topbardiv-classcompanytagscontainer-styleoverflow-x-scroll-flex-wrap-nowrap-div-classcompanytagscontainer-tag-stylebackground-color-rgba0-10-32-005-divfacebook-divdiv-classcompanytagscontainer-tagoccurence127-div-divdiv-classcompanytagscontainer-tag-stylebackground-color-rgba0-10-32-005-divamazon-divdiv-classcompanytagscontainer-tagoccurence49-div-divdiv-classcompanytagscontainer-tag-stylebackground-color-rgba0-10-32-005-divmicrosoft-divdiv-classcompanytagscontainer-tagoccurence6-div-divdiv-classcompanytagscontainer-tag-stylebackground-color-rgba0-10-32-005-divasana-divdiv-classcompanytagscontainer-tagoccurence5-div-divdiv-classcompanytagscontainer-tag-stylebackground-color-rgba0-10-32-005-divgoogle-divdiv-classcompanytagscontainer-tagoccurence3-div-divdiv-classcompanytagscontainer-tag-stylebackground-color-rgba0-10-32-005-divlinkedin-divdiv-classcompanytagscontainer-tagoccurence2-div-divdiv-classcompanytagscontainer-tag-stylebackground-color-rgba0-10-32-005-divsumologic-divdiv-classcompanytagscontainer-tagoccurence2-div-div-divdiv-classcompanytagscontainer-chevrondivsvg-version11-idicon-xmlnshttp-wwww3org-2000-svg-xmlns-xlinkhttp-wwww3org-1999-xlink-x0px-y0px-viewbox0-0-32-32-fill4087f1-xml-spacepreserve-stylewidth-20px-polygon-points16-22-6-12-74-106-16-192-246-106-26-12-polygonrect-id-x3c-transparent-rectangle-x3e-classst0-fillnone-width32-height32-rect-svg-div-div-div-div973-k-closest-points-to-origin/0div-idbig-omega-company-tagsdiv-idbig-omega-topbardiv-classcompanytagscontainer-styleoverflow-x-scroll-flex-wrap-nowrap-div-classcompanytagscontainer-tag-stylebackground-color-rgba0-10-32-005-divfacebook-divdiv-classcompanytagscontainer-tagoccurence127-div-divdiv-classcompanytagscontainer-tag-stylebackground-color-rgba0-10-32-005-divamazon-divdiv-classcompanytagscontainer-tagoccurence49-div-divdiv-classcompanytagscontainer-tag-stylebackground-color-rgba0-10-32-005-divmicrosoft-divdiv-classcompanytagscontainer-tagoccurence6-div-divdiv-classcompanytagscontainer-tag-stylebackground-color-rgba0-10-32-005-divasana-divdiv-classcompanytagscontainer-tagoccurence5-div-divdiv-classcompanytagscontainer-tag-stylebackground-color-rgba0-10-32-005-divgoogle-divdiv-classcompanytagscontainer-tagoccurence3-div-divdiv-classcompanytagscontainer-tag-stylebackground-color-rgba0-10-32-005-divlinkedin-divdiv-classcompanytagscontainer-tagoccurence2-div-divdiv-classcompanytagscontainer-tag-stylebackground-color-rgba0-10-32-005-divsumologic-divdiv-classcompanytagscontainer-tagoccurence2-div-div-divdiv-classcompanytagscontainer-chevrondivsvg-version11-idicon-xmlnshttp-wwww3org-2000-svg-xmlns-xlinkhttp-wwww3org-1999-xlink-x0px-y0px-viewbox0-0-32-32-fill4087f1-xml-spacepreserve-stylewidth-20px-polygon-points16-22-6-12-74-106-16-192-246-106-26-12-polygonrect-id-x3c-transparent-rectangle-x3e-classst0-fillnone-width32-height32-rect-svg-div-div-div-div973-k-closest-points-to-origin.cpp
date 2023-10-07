@@ -7,7 +7,7 @@ public:
         for (int i = 0; i < n; i++)
         {
             double value = sqrt(points[i][0] * points[i][0] + points[i][1] * points[i][1]);
-            cout << value << endl;
+            //cout << value << endl;
             pq.push({value, points[i]});
         }
         vector<vector<int>> ansVector;
