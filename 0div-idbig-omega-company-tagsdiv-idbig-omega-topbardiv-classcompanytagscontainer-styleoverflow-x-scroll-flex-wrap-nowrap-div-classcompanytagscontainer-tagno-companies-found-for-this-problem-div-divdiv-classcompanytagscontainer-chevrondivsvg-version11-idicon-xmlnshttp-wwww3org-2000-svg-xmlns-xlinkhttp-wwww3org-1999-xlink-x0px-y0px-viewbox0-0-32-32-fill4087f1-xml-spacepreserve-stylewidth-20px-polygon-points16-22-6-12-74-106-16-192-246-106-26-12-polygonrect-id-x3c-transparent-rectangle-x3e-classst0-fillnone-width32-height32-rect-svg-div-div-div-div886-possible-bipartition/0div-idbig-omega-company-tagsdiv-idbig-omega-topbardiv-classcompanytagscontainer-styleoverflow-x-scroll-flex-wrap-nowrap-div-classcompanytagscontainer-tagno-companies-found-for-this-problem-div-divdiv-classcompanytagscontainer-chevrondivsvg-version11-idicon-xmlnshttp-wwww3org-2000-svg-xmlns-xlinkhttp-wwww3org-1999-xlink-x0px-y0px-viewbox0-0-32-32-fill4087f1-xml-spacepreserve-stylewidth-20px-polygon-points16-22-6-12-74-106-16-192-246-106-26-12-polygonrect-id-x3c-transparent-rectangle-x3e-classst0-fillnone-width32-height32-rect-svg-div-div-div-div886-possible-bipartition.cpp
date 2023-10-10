@@ -2,45 +2,55 @@ class Solution {
 public:
     bool possibleBipartition(int n, vector<vector<int>> &dislikes)
 {
-    vector<vector<int>> adjList(n + 1);
+    vector<int> adjList[n + 1];
+    vector<int> first(n + 1, 0);
+    vector<int> second(n + 1, 0);
+    int e = dislikes.size();
 
-    // Build adjacency list
-    for (const auto &edge : dislikes)
+    for (int i = 0; i < e; i++)
     {
-        adjList[edge[0]].push_back(edge[1]);
-        adjList[edge[1]].push_back(edge[0]);
+        adjList[dislikes[i][0]].push_back(dislikes[i][1]);
+        adjList[dislikes[i][1]].push_back(dislikes[i][0]);  // Adding the reverse edge for an undirected graph
     }
 
-    vector<int> group(n + 1, 0);
-    queue<int> helperQueue;
+    vector<int> visited(n + 1, 0);
 
-    for (int i = 1; i <= n; ++i)
+    for (int i = 1; i <= n; i++)
     {
-        if (group[i] != 0)
+        if (visited[i])
             continue;
 
-        helperQueue.push(i);
-        group[i] = 1;
+        queue<pair<int, int>> helperQueue;
+        helperQueue.push({i, 0});
 
         while (!helperQueue.empty())
         {
-            int currentNode = helperQueue.front();
+            pair<int, int> currentNode = helperQueue.front();
             helperQueue.pop();
 
-            for (int neighbor : adjList[currentNode])
+            visited[currentNode.first] = 1;
+
+            if (currentNode.second)
+                first[currentNode.first]++;
+            else
+                second[currentNode.first]++;
+
+            for (int j = 0; j < adjList[currentNode.first].size(); j++)
             {
-                if (group[neighbor] == 0)
+                int neighbor = adjList[currentNode.first][j];
+
+                if (!visited[neighbor])
                 {
-                    group[neighbor] = -group[currentNode];
-                    helperQueue.push(neighbor);
-                }
-                else if (group[neighbor] == group[currentNode])
-                {
-                    // If the neighbor is in the same group, return false
-                    return false;
+                    helperQueue.push({neighbor, !currentNode.second});
                 }
             }
         }
+    }
+
+    for (int i = 1; i <= n; i++)
+    {
+        if (first[i] > 0 && second[i] > 0)
+            return false;
     }
 
     return true;
