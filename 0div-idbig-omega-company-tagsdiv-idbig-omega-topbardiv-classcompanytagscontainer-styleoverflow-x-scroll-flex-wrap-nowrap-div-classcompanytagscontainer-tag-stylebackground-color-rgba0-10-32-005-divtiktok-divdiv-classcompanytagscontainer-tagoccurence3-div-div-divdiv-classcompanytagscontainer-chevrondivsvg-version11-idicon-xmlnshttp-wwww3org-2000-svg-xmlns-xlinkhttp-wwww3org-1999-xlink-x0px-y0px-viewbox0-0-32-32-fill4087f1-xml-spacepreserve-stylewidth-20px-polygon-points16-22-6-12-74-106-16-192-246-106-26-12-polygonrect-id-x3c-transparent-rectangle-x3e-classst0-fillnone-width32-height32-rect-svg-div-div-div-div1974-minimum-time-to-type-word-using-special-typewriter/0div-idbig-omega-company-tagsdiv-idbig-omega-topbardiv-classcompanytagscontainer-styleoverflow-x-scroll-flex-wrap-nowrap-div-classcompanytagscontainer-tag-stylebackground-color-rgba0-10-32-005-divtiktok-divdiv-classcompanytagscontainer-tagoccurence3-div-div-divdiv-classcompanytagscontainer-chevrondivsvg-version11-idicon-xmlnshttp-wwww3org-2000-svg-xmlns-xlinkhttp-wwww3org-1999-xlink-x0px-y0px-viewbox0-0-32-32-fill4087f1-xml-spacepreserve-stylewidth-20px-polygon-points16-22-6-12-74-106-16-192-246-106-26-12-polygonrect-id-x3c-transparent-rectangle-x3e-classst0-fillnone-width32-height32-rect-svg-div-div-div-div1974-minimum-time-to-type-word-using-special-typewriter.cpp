@@ -18,7 +18,7 @@ public:
                 indirect += (it);
                 indirect ++;
             }
-            cout << direct << " " << indirect << endl;
+            //cout << direct << " " << indirect << endl;
             ans += min(direct, indirect);
             ans ++;
             curPointer = it;
