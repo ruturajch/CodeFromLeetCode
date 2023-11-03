@@ -29,7 +29,7 @@ public:
                 //cout << adjList[neighbors[cur][i]].size() << " " << neighbors[cur][i] << " " << cur << endl;
                 if (visited[neighbors[cur][i]] == 0 && adjList[neighbors[cur][i]].find(cur) == adjList[neighbors[cur][i]].end())
                 {
-                    cout << cur << neighbors[cur][i] << endl;
+                    //cout << cur << neighbors[cur][i] << endl;
                     ans++;
                 }
                 if (visited[neighbors[cur][i]] == 0)
