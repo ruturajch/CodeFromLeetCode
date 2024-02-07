@@ -1,31 +1,35 @@
 class Solution {
+private:
+    static bool check(pair<int, int> a, pair<int, int> b) {
+        if (a.first == b.first) {
+            return a.second < b.second;
+        } else {
+            return a.first > b.first;
+        }
+    }
+
 public:
     string frequencySort(string s) {
-        auto cmp = [](const pair<char, int>& a, const pair<char, int>& b) {
-            return a.second < b.second;
-        };
-        
-        priority_queue<pair<char, int>, vector<pair<char, int>>, decltype(cmp)> pq(cmp);
-        
-        unordered_map<char, int> hm;
-        
-        for (char c : s) {
-            hm[c]++;
+        unordered_map<char, int> um;
+        for (char ch : s) {
+            um[ch]++;
         }
-        
-        for (const auto& entry : hm) {
-            pq.push(make_pair(entry.first, entry.second));
+
+        vector<pair<int, char>> vec; // Adjusted the pair type
+
+        for (auto it : um) {
+            vec.push_back({it.second, it.first}); // Fix the order of elements here
         }
-        
+
+        sort(vec.begin(), vec.end(), check);
+
         string result = "";
-        while (!pq.empty()) {
-            pair<char, int> p = pq.top();
-            pq.pop();
-            result.append(p.second, p.first);
+
+        for (auto it : vec) { // Iterate over the sorted vector
+            cout << string(it.first, it.second) << endl;
+            result += string(it.first, it.second);
         }
-        
+
         return result;
     }
 };
-
-
