@@ -27,22 +27,13 @@ public:
         }
         curr = head;
         while(prev != NULL && curr != NULL){
-            cout << curr->val << endl;
-            cout << prev->val << endl;
-            cout << "dasd"<< endl;
-            ListNode* currForword = nullptr;
-            ListNode* prevForword = nullptr;
-            if(curr->next != nullptr)
-                currForword = curr->next;
-            if(prev->next != nullptr)
-                prevForword = prev->next;
-            cout << "dasd1"<< endl;
+            ListNode* currForword = curr->next;
+            ListNode* prevForword = prev->next;
+            
             curr->next = prev;
             prev->next = currForword;
-            cout << "dasd2"<< endl;
             curr = currForword;
             prev = prevForword;
-            cout << "dasd3"<< endl;
         }
     }
 };
