@@ -17,16 +17,16 @@ public:
             slow = slow->next;
             fast = fast->next->next;
         }
-        ListNode* prev = NULL;
+        ListNode* prev = nullptr;
         ListNode* curr = slow;
-        while(curr != NULL){
+        while(curr != nullptr){
             ListNode* forwordNode = curr->next;
             curr->next = prev;
             prev = curr;
             curr = forwordNode;
         }
         curr = head;
-        while(prev != NULL && curr != NULL){
+        while(prev != nullptr && curr != nullptr){
             ListNode* currForword = curr->next;
             ListNode* prevForword = prev->next;
             
