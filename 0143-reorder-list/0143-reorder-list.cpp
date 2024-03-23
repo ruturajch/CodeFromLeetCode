@@ -11,40 +11,38 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
-    if (!head || !head->next || !head->next->next) {
-        return; // No need to reorder for 0, 1, or 2 nodes
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+        while(fast != nullptr && fast->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        ListNode* prev = NULL;
+        ListNode* curr = slow;
+        while(curr != NULL){
+            ListNode* forwordNode = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forwordNode;
+        }
+        curr = head;
+        while(prev != NULL && curr != NULL){
+            cout << curr->val << endl;
+            cout << prev->val << endl;
+            cout << "dasd"<< endl;
+            ListNode* currForword = nullptr;
+            ListNode* prevForword = nullptr;
+            if(curr->next != nullptr)
+                currForword = curr->next;
+            if(prev->next != nullptr)
+                prevForword = prev->next;
+            cout << "dasd1"<< endl;
+            curr->next = prev;
+            prev->next = currForword;
+            cout << "dasd2"<< endl;
+            curr = currForword;
+            prev = prevForword;
+            cout << "dasd3"<< endl;
+        }
     }
-
-    // Find the middle of the list using slow and fast pointers
-    ListNode* slow = head;
-    ListNode* fast = head;
-    while (fast->next && fast->next->next) {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-
-    // Reverse the second half of the list
-    ListNode* prev = nullptr;
-    ListNode* curr = slow->next;
-    slow->next = nullptr; // Split the list into two halves
-    while (curr) {
-        ListNode* nextNode = curr->next;
-        curr->next = prev;
-        prev = curr;
-        curr = nextNode;
-    }
-
-    // Merge the two halves
-    ListNode* first = head;
-    ListNode* second = prev;
-    while (second) {
-        ListNode* temp1 = first->next;
-        ListNode* temp2 = second->next;
-        first->next = second;
-        second->next = temp1;
-        first = temp1;
-        second = temp2;
-    }
-}
-
 };
