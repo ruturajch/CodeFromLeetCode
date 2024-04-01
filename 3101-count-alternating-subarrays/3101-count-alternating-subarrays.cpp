@@ -1,19 +1,16 @@
 class Solution {
 public:
     long long countAlternatingSubarrays(vector<int>& nums) {
-        vector<int> dp(nums.size(), 0);
+        //vector<int> dp(nums.size(), 0);
         long long ansCount = 1;
+        int it = 0;
         for(int i = 1; i < nums.size(); i++){
             if(nums[i] == !nums[i - 1]){
-                dp[i] = dp[i-1];
-                int n = i - dp[i-1] + 1;
-                ansCount += n;
-                //cout << n << "ruturaj" << endl;
+                ansCount += i - it + 1;
             }else{
-                dp[i] = i;
+                it = i;
                 ansCount++;
             }
-            cout << ansCount << endl;
         }
         return ansCount;
     }
