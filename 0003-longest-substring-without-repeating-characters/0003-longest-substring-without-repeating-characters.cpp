@@ -11,7 +11,6 @@ public:
                  it = max(it, helperUm[s[i]] + 1);
             helperUm[s[i]] = i;
             ans = max(ans, i-it+1);
-            cout << ans << " " << it << endl;
         }
         return ans;
     }
