@@ -1,50 +1,47 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        // count of char in t
-        unordered_map<char, int> m;
-        for (int i = 0; i < t.size(); i++) {
-            m[t[i]]++;
+        unordered_map<char, int> umt;
+        unordered_map<char, int> ums;
+
+        for (char c : t) {
+            umt[c]++;
         }
-        
-        int i = 0;
-        int j = 0;
-        
-        // # of chars in t that must be in s
-        int counter = t.size();
-        
-        int minStart = 0;
-        int minLength = INT_MAX;
-        
-        while (j < s.size()) {
-            // if char in s exists in t, decrease
-            if (m[s[j]] > 0) {
-                counter--;
+
+        int required = umt.size(); // Number of unique characters in t that need to be matched
+        int formed = 0; // Number of unique characters in the current window that match the required frequency
+
+        int l = 0, r = 0;
+        int min_len = INT_MAX;
+        int start = 0;
+
+        while (r < s.size()) {
+            char c = s[r];
+            ums[c]++;
+
+            if (umt.find(c) != umt.end() && ums[c] == umt[c]) {
+                formed++;
             }
-            // if char doesn't exist in t, will be -'ve
-            m[s[j]]--;
-            // move j to find valid window
-            j++;
-            
-            // when window found, move i to find smaller
-            while (counter == 0) {
-                if (j - i < minLength) {
-                    minStart = i;
-                    minLength = j - i;
+
+            while (l <= r && formed == required) {
+                c = s[l];
+
+                if (r - l + 1 < min_len) {
+                    min_len = r - l + 1;
+                    start = l;
                 }
-                
-                m[s[i]]++;
-                // when char exists in t, increase
-                if (m[s[i]] > 0) {
-                    counter++;
+
+                ums[c]--;
+                if (umt.find(c) != umt.end() && ums[c] < umt[c]) {
+                    formed--;
                 }
-                i++;
+
+                l++;
             }
+
+            r++;
         }
-        
-        if (minLength != INT_MAX) {
-            return s.substr(minStart, minLength);
-        }
-        return "";
+
+        return min_len == INT_MAX ? "" : s.substr(start, min_len);
     }
 };
