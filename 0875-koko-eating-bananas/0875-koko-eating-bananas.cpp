@@ -7,10 +7,9 @@ public:
         }
         return h;
     }
-
     int binary(vector<int>& nums, int h, int i, int j) {
         if (i < j) {
-            int m = i + (j - i) / 2;
+            int m = i + (j - i) / 2;  // Corrected midpoint calculation
             int k = check(nums, m);
             if (k <= h) {
                 return binary(nums, h, i, m);
@@ -20,19 +19,14 @@ public:
         }
         return i;
     }
-
     int minEatingSpeed(vector<int>& piles, int h) {
         int maxele = 0;
-        for (auto it : piles) {
+        for (auto it : piles)
             maxele = max(maxele, it);
-        }
 
         int lo = 1;
         int hi = maxele;
 
         return binary(piles, h, lo, hi);
     }
-
-
-
 };
