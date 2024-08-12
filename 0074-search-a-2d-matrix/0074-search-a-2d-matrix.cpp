@@ -6,7 +6,7 @@ public:
             if(nums[m/n][m%n] == target){
                 return true;
             }else if(nums[m/n][m%n] > target)
-            return binary (nums, target, i, m, n);
+                return binary (nums, target, i, m, n);
             else
                 return binary(nums, target, m+1, j, n);
         }else return false;
