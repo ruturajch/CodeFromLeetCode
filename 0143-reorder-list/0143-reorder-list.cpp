@@ -11,29 +11,39 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
+        
+        //find middle
         ListNode* slow = head;
-        ListNode* fast = head->next;
-        while(fast != nullptr && fast->next != nullptr){
+        ListNode* fast = head;
+        while(fast != nullptr){
+            if(fast->next == nullptr){
+                slow = slow->next;
+                break;
+            }
+            fast = fast->next;
             slow = slow->next;
-            fast = fast->next->next;
+            fast = fast->next;
         }
+        
+        //reverse the linkedlist
         ListNode* prev = nullptr;
-        ListNode* curr = slow;
-        while(curr != nullptr){
-            ListNode* forwordNode = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = forwordNode;
+        while(slow != nullptr){
+            //cout << slow->val << endl;
+            ListNode* cur = slow->next;
+            slow->next = prev;
+            prev = slow;
+            slow = cur;
         }
-        curr = head;
-        while(prev != nullptr && curr != nullptr){
-            ListNode* currForword = curr->next;
-            ListNode* prevForword = prev->next;
-            
-            curr->next = prev;
-            prev->next = currForword;
-            curr = currForword;
-            prev = prevForword;
+        ListNode* itr = head;
+        while(prev != nullptr){
+            ListNode* curprev = prev->next;
+            ListNode* curitr = itr->next;
+            cout << prev->val << " " << itr->val << endl;
+            itr->next = prev;
+            prev->next = curitr;
+            itr = curitr;
+            prev = curprev;
         }
+        itr->next = nullptr;
     }
 };
