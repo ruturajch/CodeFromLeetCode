@@ -10,20 +10,20 @@ public:
         }
         vector<bool> helperVector(n, false);
         
-        priority_queue<pair<double, pair<int, int>>> pq;
-        pq.push({1, {start_node, start_node}});
-        
+        priority_queue<pair<double, int>> pq;
+        pq.push({1, start_node});
+
         while(!pq.empty()){
             auto it = pq.top();
             pq.pop();
-            helperVector[it.second.first] = true;
-            if(it.second.first == end_node){
+            helperVector[it.second] = true;
+            if(it.second == end_node){
                 return it.first;
             }
-            cout << it.second.first << endl;
-            for(int i = 0; i < adjlist[it.second.first].size(); i++){
-                if(!helperVector[adjlist[it.second.first][i].first])
-                    pq.push({adjlist[it.second.first][i].second * it.first, {adjlist[it.second.first][i].first, it.second.first}});
+            cout << it.second << endl;
+            for(int i = 0; i < adjlist[it.second].size(); i++){
+                if(!helperVector[adjlist[it.second][i].first])
+                    pq.push({adjlist[it.second][i].second * it.first, adjlist[it.second][i].first});
             }
         }
         return 0;
