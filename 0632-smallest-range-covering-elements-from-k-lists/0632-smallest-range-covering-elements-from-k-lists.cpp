@@ -1,17 +1,4 @@
 class Solution {
-private:
-    bool check(set<int> expectedSet, unordered_map<int, int> helperMap){
-        bool flag = true;
-        for(auto it : expectedSet){
-            if(helperMap[it]!= 0){
-                expectedSet.erase(it);
-            }else{
-                flag = false;
-            }
-        }
-        return flag;
-    }
-
 public:
     vector<int> smallestRange(vector<vector<int>>& nums) {
         vector<pair<int, int>> helperVector;
